@@ -21,3 +21,13 @@ model User {
     updatedAt DateTime @updatedAt    
 
 }
+
+model Project {
+    id          String    @id @default(cuid())
+    name        String
+    githubUrl   String
+    deletedAt  DateTime?
+    
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+}
