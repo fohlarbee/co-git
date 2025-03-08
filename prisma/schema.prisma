@@ -17,8 +17,12 @@ model User {
     lastName String?
     imageUrl String?
     credits Int?      @default(150)
+
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt    
+    updatedAt DateTime @updatedAt 
+
+    // Relationships
+    userToProjects UserToProject[]   
 
 }
 
@@ -30,4 +34,41 @@ model Project {
     
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
+
+    // Relationships
+    userToProjects UserToProject[]
+    commits        Commit[]
+}
+
+model UserToProject {
+    id          String    @id @default(cuid())
+    userId      String
+    projectId   String
+
+    user     User         @relation(fields: [userId], references: [id])
+    project  Project      @relation(fields: [projectId], references: [id])
+
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+
+    @@unique([userId, projectId])
+}
+
+model Commit {
+    id          String    @id @default(cuid())
+    projectId   String
+
+    commitMesssage String
+    commitHash     String
+    commitAuthorName String
+    commitAuthorAvaterUrl String
+    commitDate     DateTime
+
+    // AI Summary
+    commitSummary  String
+
+    project     Project    @relation(fields: [projectId], references: [id])
+
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt    
 }

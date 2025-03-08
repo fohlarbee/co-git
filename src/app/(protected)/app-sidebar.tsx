@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
+import useProject from "@/hooks/use-project"
 import { cn } from "@/lib/utils"
 import { Bot, CreditCard, LayoutDashboard, Plus, PresentationIcon } from "lucide-react"
 import Image from "next/image"
@@ -31,25 +32,11 @@ const items = [
      },
 ];
 
-const projects = [
-    
-    {
-        name: 'Project 1',
-    },
-    {
-        name: 'Project 2',
-    },
-    {
-        name: 'Project 3',
-    },
-    {
-        name: 'Project 4',
-    }
 
-]
 export function AppSideBar(){
     const pathname = usePathname();
     const {open} = useSidebar();
+    const {setProjectId, projectId, projects} = useProject();
 
 
      return (
@@ -101,16 +88,16 @@ export function AppSideBar(){
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                                {projects.map((p, i) => (
+                                {projects?.map((p, i) => (
                                     <SidebarMenuItem key={i}>
                                         <SidebarMenuButton asChild>
 
-                                            <div>
+                                            <div onClick={() => setProjectId(p.id)}>
                                                 <div 
                                                 className={cn(
                                                     'rounded-sm border size-6 flex items-center justify-center text-sm bg-[#fff] text-primary',
                                                     {
-                                                        'bg-primary text-[#fff]': true 
+                                                        'bg-primary text-[#fff]': projectId === p.id 
                                                     }
                                                  )}>
                                                     {p.name[0]}
