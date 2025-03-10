@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
 import useProject from "@/hooks/use-project"
 import { cn } from "@/lib/utils"
-import { Bot, CreditCard, LayoutDashboard, Plus, PresentationIcon } from "lucide-react"
+import { Bot, CreditCard, LayoutDashboard, Loader2, Plus, PresentationIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -88,26 +88,40 @@ export function AppSideBar(){
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                                {projects?.map((p, i) => (
-                                    <SidebarMenuItem key={i}>
-                                        <SidebarMenuButton asChild>
-
-                                            <div onClick={() => setProjectId(p.id)}>
-                                                <div 
-                                                className={cn(
-                                                    'rounded-sm border size-6 flex items-center justify-center text-sm bg-[#fff] text-primary',
-                                                    {
-                                                        'bg-primary text-[#fff]': projectId === p.id 
-                                                    }
-                                                 )}>
-                                                    {p.name[0]}
-
+                            {projects ? 
+                                    projects?.map((p, i) => (
+                                        <SidebarMenuItem key={i}>
+                                            <SidebarMenuButton asChild>
+    
+                                                <div onClick={() => setProjectId(p.id)}>
+                                                    <div 
+                                                    className={cn(
+                                                        'rounded-sm border size-6 flex items-center justify-center text-sm bg-[#fff] text-primary',
+                                                        {
+                                                            'bg-primary text-[#fff]': projectId === p.id 
+                                                        }
+                                                     )}>
+                                                        {p.name[0]}
+    
+                                                    </div>
+                                                    <span>{p.name}</span>
                                                 </div>
-                                                <span>{p.name}</span>
-                                            </div>
-                                        </SidebarMenuButton>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))
+                                    
+                                :
+                                (
+                                    <SidebarMenuItem>
+                                        <div className="flex items-center justify-center w-full h-20 flex-col ">
+                                            <Loader2 className="size-6 text-primary animate-spin "/>
+                                            <p className="text-sm text-primary">Loading projects</p>
+
+                                        </div>
                                     </SidebarMenuItem>
-                                ))}
+                                )
+                            }
+                               
                                  <div className="h-2"></div>
                                  {open && (
                                          <SidebarMenuItem>
