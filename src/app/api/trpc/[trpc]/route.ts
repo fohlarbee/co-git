@@ -4,7 +4,7 @@ import { type NextRequest } from "next/server";
 import { env } from "@/env";
 import { appRouter } from "@/server/api/root";
 import { createTRPCContext } from "@/server/api/trpc";
-
+import axios from "axios";
 
 const createContext = async (req: NextRequest) => {
   return createTRPCContext({
@@ -13,7 +13,7 @@ const createContext = async (req: NextRequest) => {
 };
 
 const handler = (req: NextRequest) =>
-  fetchRequestHandler({ 
+  fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
     router: appRouter,
@@ -22,10 +22,13 @@ const handler = (req: NextRequest) =>
       env.NODE_ENV === "development"
         ? ({ path, error }) => {
             console.error(
-              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
+              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
             );
           }
         : undefined,
   });
 
+
+  export async function testfunc (){
+  }
 export { handler as GET, handler as POST };

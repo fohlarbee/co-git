@@ -4,7 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import {ClerkProvider} from '@clerk/nextjs';
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -18,13 +18,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-         <html lang="en" className={`${GeistSans.variable}`}>
-          <body>
-            <TRPCReactProvider>{children}</TRPCReactProvider>
-            <Toaster richColors/>
-          </body>
-         </html>
+      <html lang="en" className={`${GeistSans.variable}`}>
+        <body>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster richColors />
+        </body>
+      </html>
     </ClerkProvider>
-   
   );
 }
