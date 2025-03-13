@@ -22,7 +22,7 @@ export const projectRouter = createTRPCRouter({
               userId: ctx.user.userId!,
             },
           },
-        },
+        }, 
       });
       await indexGithubRepo(
         project.id,
@@ -102,6 +102,7 @@ export const projectRouter = createTRPCRouter({
         }
          
    })
+   return meeting;
 
   }),
   getMeetings: protectedProcedure.input(z.object({
@@ -109,7 +110,19 @@ export const projectRouter = createTRPCRouter({
     })).query(async ({ctx, input}) => { 
       return await ctx.db.meeting.findMany({
         where:{projectId: input.projectId},
+        include: {issues: true},
       })
+  }),
+  deleteMeeting: protectedProcedure.input(z.object({
+    meetingId: z.string()
+  })).mutation(async ({ctx, input}) => {
+    await ctx.db.issue.deleteMany({
+      where: {meetingId: input.meetingId}
+    });
+    return await ctx.db.meeting.delete({
+      where: {id: input.meetingId}
+    });
+
   })
 });
 

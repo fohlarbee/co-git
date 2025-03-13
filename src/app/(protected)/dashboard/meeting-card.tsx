@@ -1,4 +1,6 @@
- import { Button } from '@/components/ui/button';
+ 
+ "use client";
+   import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { uploadFile } from '@/lib/firebase';
 import { Presentation, Upload } from 'lucide-react';
@@ -9,12 +11,24 @@ import { api } from '@/trpc/react';
 import useProject from '@/hooks/use-project';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
  const MeetingCard = () => {
     const [progress, setProgress] = React.useState(0);
     const [isUploading, setIsUploading] = React.useState(false);
     const uploadMeeting = api.project.uploadMeeting.useMutation();
     const {projectId} = useProject ();
     const router = useRouter();
+    const processMeeting = useMutation({
+        mutationFn: async ({ meetingUrl, meetingId, projectId }: { meetingUrl: string, meetingId: string, projectId: string }) => {
+            const res = await axios.post('/api/process-meeting', {
+                meetingUrl,
+                meetingId,
+                projectId
+            });
+            return res.data;
+        }
+    })
     const {getRootProps, getInputProps} = useDropzone({
         accept:{
             'audio/*': ['.mp3', '.wav', '.m4a']
@@ -33,9 +47,10 @@ import { useRouter } from 'next/navigation';
                 meetingUrl: downloadURL,
                 name: file.name
             },{
-                onSuccess: () => {
+                onSuccess: async (meeting) => {
                     toast.success('Meeting uploaded successfully');
                     router.push(`/meetings`)
+                    await processMeeting.mutateAsync({meetingId: meeting.id, meetingUrl: downloadURL, projectId});
                 },
                 onError: (error) => {
                     toast.error(error.message);
@@ -45,7 +60,7 @@ import { useRouter } from 'next/navigation';
             setIsUploading(false);
         }
     })
-
+  
    return (
     <Card className='col-span-2 flex flex-col items-center justify-center p-10' {...getRootProps()}>
         {!isUploading && (
