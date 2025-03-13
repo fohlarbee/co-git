@@ -42,6 +42,7 @@ model Project {
   commits              Commit[]
   sourceCodeEmbeddings SourceCodeEmbedding[]
   savedQuestions            Question[]
+  meetings             Meeting[]
 }
 
 model UserToProject {
@@ -106,4 +107,44 @@ model Question {
   user            User @relation(fields: [userId], references: [id])
   project         Project @relation(fields: [projectId], references: [id])
 
+}
+
+
+model Meeting {
+  id        String  @id @default(cuid())
+  name      String
+  meetingUrl String
+  projectId  String
+  status      MeetingStatus @default(PROCESSING) // meeting
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  project Project @relation(fields: [projectId], references: [id])
+  issues  Issue[]
+
+ 
+}
+
+model Issue {
+  id        String  @id @default(cuid())
+ 
+  start String
+  end String
+  gist String
+  headline String
+  summary String
+  meetingId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  meeting Meeting @relation(fields: [meetingId], references: [id])
+
+}
+enum MeetingStatus {
+  PROCESSING
+  COMPLETED
 }
