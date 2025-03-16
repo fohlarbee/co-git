@@ -88,7 +88,7 @@ const AskQuestionCard  = () => {
                   // style={{ whiteSpace: 'pre-wrap' }}
                   // urlTransform={true}
                   
-                source={htmlToMarkdown((DOMPurify.sanitize(answer)))} className='max-w-[80vw] h-full max-h-[40vh] overflow-scroll'/>
+                source={htmlToMarkdown((DOMPurify.sanitize(answer)))} className='max-w-[80vw] h-full max-h-[40vh] overflow-y-scroll'/>
                 <div className="h-4"></div>
                 <CodeReferences fileReferences={filesReferences}/>
                 <Button type='button' onClick={() => setOpen(false)}>Close</Button>
