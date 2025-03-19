@@ -10,11 +10,12 @@ import { askQuestion } from './actions';
 import { readStreamableValue } from 'ai/rsc';
 import MDEditor from '@uiw/react-md-editor';
 import CodeReferences from './code-references';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 import { api } from '@/trpc/react';
 import { toast } from 'sonner';
 import useRefresh from '@/hooks/use-refresh';
 import { htmlToMarkdown } from '@/lib/utils';
+import sanitizeHtml from 'sanitize-html';
 
 const AskQuestionCard  = () => {
   const {project} = useProject();
@@ -63,7 +64,7 @@ const AskQuestionCard  = () => {
                           onClick={() => saveAnswer.mutate({
                             projectId: project!.id,
                             question,
-                            answer: htmlToMarkdown((DOMPurify.sanitize(answer))),
+                            answer: htmlToMarkdown((sanitizeHtml(answer))),
                             filesReferences: filesReferences
                           }, {
                             onSuccess: () => {
@@ -88,7 +89,7 @@ const AskQuestionCard  = () => {
                   // style={{ whiteSpace: 'pre-wrap' }}
                   // urlTransform={true}
                   
-                source={htmlToMarkdown((DOMPurify.sanitize(answer)))} className='max-w-[80vw] h-full max-h-[40vh] overflow-y-scroll'/>
+                source={htmlToMarkdown((sanitizeHtml(answer)))} className='max-w-[80vw] h-full max-h-[40vh] overflow-y-scroll'/>
                 <div className="h-4"></div>
                 <CodeReferences fileReferences={filesReferences}/>
                 <Button type='button' onClick={() => setOpen(false)}>Close</Button>
