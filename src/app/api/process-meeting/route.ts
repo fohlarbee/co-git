@@ -11,7 +11,7 @@ const bodyParser = z.object({
 });
 
 
-export const maxDuration = 300;  //5 minutes
+export const maxDuration = 60;  // 1 minutes
 
 export async function POST(req: Request){
     const {userId} = await auth();

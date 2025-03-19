@@ -34,7 +34,7 @@ import axios from 'axios';
             'audio/*': ['.mp3', '.wav', '.m4a']
         },
         multiple: false,
-        maxSize:50_000_000, 
+        maxSize:15_000_000, 
         onDrop: async (acceptedFiles) => {
             if (!projectId) return;
             setIsUploading(true);
