@@ -20,7 +20,6 @@ export async function POST(req:Request){
         return NextResponse.json({error: 'Invalid Signature'}, {status: 400});
     }
 
-    console.log(event.type);
     const session = event.data.object as Stripe.Checkout.Session;
     
     if(event.type === "checkout.session.completed"){
@@ -41,5 +40,5 @@ export async function POST(req:Request){
 
 
 
-    return NextResponse.json({mssg:'yes'}, {status: 200});
+    return NextResponse.json(null, {status: 200});
 }

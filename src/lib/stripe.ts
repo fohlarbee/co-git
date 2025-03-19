@@ -13,7 +13,6 @@ import { redirect } from "next/navigation";
     if (!userId) throw new Error('User not found');
   
     const unit_amount = Math.round(credits * 50 * 100);
-    console.log('unit_amount', unit_amount);
     const session = await stripe.checkout.sessions.create({
         payment_method_types:['card'],
         line_items:[
