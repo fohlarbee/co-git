@@ -1,8 +1,6 @@
 import { db } from '@/server/db';
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import React from 'react'
-import { idea } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 type Props = {
     params: Promise<{projectId: string}>

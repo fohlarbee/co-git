@@ -47,8 +47,8 @@ const items = [
     icon: PresentationIcon,
   },
   {
-    title: "Billings",
-    url: "/billings",
+    title: "Billing",
+    url: "/billing",
     icon: CreditCard,
   },
 ];

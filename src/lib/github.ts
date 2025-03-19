@@ -31,7 +31,7 @@ const getCommitHashes = async (githubUrl: string): Promise<Response[]> => {
       new Date(b.commit.author?.date).getTime() -
       new Date(a.commit.author?.date).getTime(),
   ) as any[];
-  return sortedCommits.slice(0, 10).map((commit) => ({
+  return sortedCommits.map((commit) => ({
     commitHash: commit.sha as string,
     commitMesssage: commit.commit.message ?? "",
     commitAuthorName: commit.commit.author?.name ?? "",
@@ -50,7 +50,7 @@ export const pullCommits = async (projectId: string) => {
   );
   // unprocessedCommits.slice(0, 5);
   const summaryResponses = await Promise.allSettled(
-    unprocessedCommits.map((commit) => {
+    unprocessedCommits.slice(0,10).map((commit) => {
       return summarizeCommit(githubUrl, commit.commitHash);
     }),
   );

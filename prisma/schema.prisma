@@ -26,6 +26,7 @@ model User {
   // Relationships
   userToProjects UserToProject[]
   questionsAsked      Question[]
+  stripeTransactions  StripeTransaction[]
 }
 
 model Project {
@@ -142,6 +143,17 @@ model Issue {
 
   // Relationships
   meeting Meeting @relation(fields: [meetingId], references: [id])
+
+}
+
+model StripeTransaction {
+  id   String    @id @default(cuid())
+  credits    Int
+  userId   String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  user    User   @relation(fields: [userId], references: [id])
 
 }
 enum MeetingStatus {
