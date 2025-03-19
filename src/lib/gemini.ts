@@ -18,7 +18,7 @@ export const aiSummarizeCommit = async (diff: string) => {
       --- a/lib/index.js
       +++ b/lib/index.js
       \`\`\`
-      This means that \`lib/index.js\` was modified in this commit. Note that this is only an example.
+      This means that \`lib/index.js\` was modified in this commit. Note that routis is only an example.
       Then there is a specifier of the lines that were modified.
       A line starting with \`+\` means it was added.
       A line that starting with \`-\` means that line was deleted.
@@ -80,7 +80,6 @@ export async function generateEmbedding(summary: string) {
   });
 
   const result = await model.embedContent(summary);
-  // console.log(result.embedding.values);
 
   return result.embedding.values;
 }

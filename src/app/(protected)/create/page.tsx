@@ -63,7 +63,7 @@ const CreatePage = () => {
       />
       <div>
         <div>
-          <h1 className="text-4xl font-semibold">
+          <h1 className="text-4xl font-semibold text-center">
             Link your Github Repository
           </h1>
           <p className="mt-2 text-center text-sm text-muted-foreground">
@@ -93,7 +93,7 @@ const CreatePage = () => {
             <div className="h-4"></div>
             {!!checkCredits.data && (
               <>
-                <div className="bg-green-50 px-4 py-2 rounded-md border border-green-200 text-orange-700">
+                <div className="bg-green-50 px-4 py-2 rounded-md border border-green-200 text-orange-700 mb-3">
                     <div className="flex items-center gap-2">
                       <InfoIcon className='size-4'/>
                       <p className=' text-sm'>You are meant to be charged <strong>{checkCredits.data?.fileCount}</strong> {" "}credits for this repository.

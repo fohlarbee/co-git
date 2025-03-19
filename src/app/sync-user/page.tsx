@@ -8,7 +8,6 @@ const SyncUser = async () => {
   if (!userId) throw new Error("No user ID found");
   const client = await clerkClient();
   const user = await client.users.getUser(userId);
-  console.log("comaparingIds", userId, user.id);
 
   if (!user?.emailAddresses?.[0]?.emailAddress) return notFound();
 

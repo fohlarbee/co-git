@@ -50,7 +50,7 @@ export const pullCommits = async (projectId: string) => {
   );
   // unprocessedCommits.slice(0, 5);
   const summaryResponses = await Promise.allSettled(
-    unprocessedCommits.slice(0,10).map((commit) => {
+    unprocessedCommits.slice(0,5).map((commit) => {
       return summarizeCommit(githubUrl, commit.commitHash);
     }),
   );

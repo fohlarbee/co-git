@@ -9,36 +9,37 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 });
 export async function POST(req:Request){
     const body = await req.text();
-    console.log('Body', body);
-    const signature = (await headers()).get("Stripe-Signature") as string;
+    const signature = req.headers.get("Stripe-Signature") as string;
     let event: Stripe.Event;
 
 
     try {
-        event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET as string);
+        event = stripe.webhooks.constructEvent(
+            body, 
+            signature, 
+            process.env.STRIPE_WEBHOOK_SECRET as string);
+
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        if(event.type === "checkout.session.completed" || event.type === "invoice.payment_succeeded"){
+            const payment =  await stripe.checkout.sessions.retrieve(session.id);
+            const credits = session.metadata?.['credits']
+            const userId = session.client_reference_id;
+    
+            if (!userId || !credits)
+                    return NextResponse.json({error: 'Invalid Session'}, {status: 400});
+            await db.stripeTransaction.create({data:{userId, credits: parseInt(credits)}});
+            await db.user.update({where:{id: userId}, data:{credits: {increment: parseInt(credits)}}});
+    
+    
+            // return NextResponse.json({msgg: 'Credits added successfully'}, {status: 200});
+        }
+            return NextResponse.json(null, {status: 200});
     } catch (error) {
+        console.log('error', error);
         return NextResponse.json({error: 'Invalid Signature'}, {status: 400});
     }
 
-    const session = event.data.object as Stripe.Checkout.Session;
-    
-    if(event.type === "checkout.session.completed"){
-        console.log("Payment was successful");
-        const credits = session.metadata?.['credits']
-        const userId = session.client_reference_id;
-
-        if (!userId || !credits)
-             return NextResponse.json({error: 'Invalid Session'}, {status: 400});
-        await db.stripeTransaction.create({data:{userId, credits: parseInt(credits)}});
-        await db.user.update({where:{id: userId}, data:{credits: {increment: parseInt(credits)}}});
-
-
-        return NextResponse.json({msgg: 'Credits added successfully'}, {status: 200});
-    }
-
-
-
-
-
-    return NextResponse.json(null, {status: 200});
+   
 }
+

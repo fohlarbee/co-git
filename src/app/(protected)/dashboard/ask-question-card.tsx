@@ -26,7 +26,7 @@ const AskQuestionCard  = () => {
   const [answer, setAnswer] = React.useState('');
   const saveAnswer = api.project.saveAnswer.useMutation();
   const refresh =  useRefresh();
-  console.log(saveAnswer.isPending)
+  // console.log(saveAnswer.isPending)
   const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     setAnswer('');
     setFilesReferences([]);
@@ -42,8 +42,8 @@ const AskQuestionCard  = () => {
     for await (const delta of readStreamableValue(output)){
       if (delta)
         setAnswer(ans => ans + delta);
-      console.log('delta', delta);
-      console.log('answer', answer);
+      // console.log('delta', delta);
+      // console.log('answer', answer);
     }
 
     setIsLoading(false); 

@@ -11,9 +11,7 @@ import CodeReferences from "../dashboard/code-references";
 
 const QAPage = () => {
   const {projectId} = useProject();
-  console.log('projectId',projectId);
   const {data:questions} = api.project.getQuestions.useQuery({projectId});
-  console.log('questions',questions);
   const [questionIndex, setQuestionIndex] = React.useState(0);
   const question = questions?.[questionIndex];
 

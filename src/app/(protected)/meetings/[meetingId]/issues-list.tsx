@@ -12,7 +12,6 @@ import { Loader2Icon, VideoIcon } from 'lucide-react';
 import React from 'react'
 
 const IssuesList = ({meetingId}: Props) => {
-    console.log('meetingId',meetingId)
     const  {data: meeting, isLoading} = api.project.getMeetingById.useQuery({meetingId}, {
         refetchInterval: 4000
     });

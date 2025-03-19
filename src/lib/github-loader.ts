@@ -68,7 +68,6 @@ const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
 };
 
 
-// console.log( await loadGithubRepo('https://github.com/fohlarbee/GistFiesta'));
 
 export const indexGithubRepo = async (
   projectId: string,
@@ -106,7 +105,6 @@ const generateEmbeddings = async (docs: Document[]) => {
   return await Promise.all(
     docs.map(async (doc) => {
       const summary = (await summarizeCode(doc)) as string;
-      // console.log("summary", summary);
       const embedding = await generateEmbedding(summary);
       return {
         summary,
