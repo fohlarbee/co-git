@@ -30,7 +30,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const items = [
+export const items = [
   {
     title: "Dashboard",
     url: "/dashboard",
@@ -57,26 +57,15 @@ export function AppSideBar({isOpen, setIsOpen}: {isOpen:boolean, setIsOpen:(open
   const pathname = usePathname();
   const { open } = useSidebar();
   const { setProjectId, projectId, projects } = useProject();
-  // const [isOpen, setIsOpen] = React.useState(false);
 
   return (
 
     <>
 
-      {/* <Button
-          variant="ghost"
-          className="fixed top-4 left-4 z-5 md:hidden "
-          
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={24} /> : <MenuIcon size={24} />}
-      </Button> */}
+     
       <Sidebar
       
-        // className={cn(
-        //   "fixed inset-y-0 left-0 z-500 w-64 bg-white shadow-lg transition-transform md:relative md:translate-x-0",
-        //   isOpen ? "translate-x-0 w-full z-500" : "-translate-x-full"
-        // )}
+       
       
       collapsible="icon" variant="floating" >
         <SidebarHeader>
@@ -162,13 +151,7 @@ export function AppSideBar({isOpen, setIsOpen}: {isOpen:boolean, setIsOpen:(open
         </SidebarContent>
       </Sidebar>
 
-       {/* Overlay for Small Screens */}
-       {/* {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 md:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )} */}
+       
 
 
     </>

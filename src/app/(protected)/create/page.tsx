@@ -53,15 +53,16 @@ const CreatePage = () => {
 
   const hasEnoughCredits = checkCredits?.data?.userCredits ? checkCredits?.data?.userCredits >= checkCredits?.data?.fileCount : true;
   return (
-    <div className="flex h-full items-center justify-center gap-12">
+    <div className="md:flex h-full items-center justify-center gap-12 ">
       <Image
         src="/images/create.png"
         width={400}
         height={400}
         alt="create"
-        className="h-56 w-auto"
+        className="h-56 md:w-auto justify-center"
       />
       <div>
+        <div className="h-4"></div>
         <div>
           <h1 className="text-4xl font-semibold text-center">
             Link your Github Repository

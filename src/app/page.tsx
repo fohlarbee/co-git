@@ -8,7 +8,6 @@ export default async function Home() {
   const {userId} = await auth();
 
   if (!userId) return redirect('/sign-in');
-
   const dbUser = await db.user.findUnique({where:{id: userId}});
   const client = await clerkClient();
   const user = await client.users.getUser(userId);
